@@ -1,0 +1,11 @@
+[eiko.package]
+name = "eikobot-docker"
+version = "0.0.1"
+description = ""
+long_description = ""
+long_description_content_type = "text/markdown"
+author = "kazaamjt"
+author_email = "kazaamjt@gmail.com"
+license = "MIT"
+source_dir = "docker"
+requires = []

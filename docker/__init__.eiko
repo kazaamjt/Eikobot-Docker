@@ -1,5 +1,25 @@
 import std
 
 
+resource DockerInstaller:
+    host: std.Host
+
+
 resource DockerHost:
     host: std.Host
+    install: bool = True
+
+    _installer: Optional[DockerInstaller] = None
+
+    def __init__(
+        self,
+        host: std.Host,
+        install: bool = True
+    ):
+        self.host = host
+        self.install = install
+
+        if self.install:
+            self._installer = DockerInstaller(self.host)
+        else:
+            self._installer = None

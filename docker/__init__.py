@@ -37,8 +37,12 @@ class DockerInstallerHandler(CRUDHandler):
         """
         Install docker on a remote host.
         """
-        if host.os_name:
+        if host.os_name.resolve(str) == "debian":
             result = await self._install_debian(ctx, host)
+        else:
+            ctx.error(f"OS '{host.os_name.resolve(str)}' is currently not supported.")
+            return False
+
         if result.failed():
             return False
 

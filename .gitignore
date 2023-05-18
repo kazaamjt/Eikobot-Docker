@@ -3,3 +3,5 @@ __pycache__
 dist/
 venv/
 test.eiko
+.mypy_cache
+.vscode

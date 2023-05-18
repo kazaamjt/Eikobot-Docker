@@ -8,4 +8,5 @@ author = "kazaamjt"
 author_email = "kazaamjt@gmail.com"
 license = "MIT"
 source_dir = "docker"
+eikobot_requires = ">=0.5.0"
 requires = []

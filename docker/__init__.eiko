@@ -1,4 +1,5 @@
 import std
+from std.file import File, read_file
 
 
 resource DockerInstaller:
@@ -8,8 +9,10 @@ resource DockerInstaller:
 resource DockerHost:
     host: std.Host
     install: bool = True
+    docker_port: std.Port = 2376
 
     _installer: Optional[DockerInstaller] = None
+    _system_d_file: File
 
     def __init__(
         self,
@@ -18,8 +21,19 @@ resource DockerHost:
     ):
         self.host = host
         self.install = install
+        self.docker_port = 2376
+        self._system_d_file = File(
+            host=host,
+            path=Path("/etc/systemd/system/docker.service.d/override.conf"),
+            content=read_file(__file__/"../files/override.conf"),
+            owner="root",
+            group="root",
+            mode="644",
+            requires_sudo=True,
+        )
 
         if self.install:
             self._installer = DockerInstaller(self.host)
+            self._system_d_file.__depends_on__.append(self._installer)
         else:
             self._installer = None
